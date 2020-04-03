@@ -257,6 +257,19 @@ features:
   # embedded_database enables the embedded PXC sub-chart. Disabling it allows using an external, already seeded,
   embedded_database:
     enabled: true
+  blobstore:
+    # possible values for provider: singleton and s3
+    provider: singleton
+    s3:
+      aws_region: "us-west-2"
+      blobstore_access_key_id: ""
+      blobstore_secret_access_key: ""
+      blobstore_admin_users_password: "mypass"
+      # The following values are used as S3 bucket names
+      app_package_directory_key: "apps-cf"
+      buildpack_directory_key: "buildpacks-cf"
+      droplet_directory_key: "droplets-cf"
+      resource_directory_key: "resources-cf"
 
   # The external database type can be either 'mysql' or 'postgres'.
   external_database:

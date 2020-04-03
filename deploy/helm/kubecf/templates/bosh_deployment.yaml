@@ -28,6 +28,16 @@ spec:
   - name: {{ $root.Release.Name }}-ops-use-bits-service
     type: configmap
 {{- end }}
+{{- if eq .Values.features.blobstore.provider "s3" }}
+  - name: {{ $root.Release.Name }}-ops-use-external-blobstore
+    type: configmap
+  - name:  {{ $root.Release.Name }}-ops-use-s3-blobstore
+    type: configmap
+{{- if .Values.features.eirini.enabled }}
+  - name: {{ $root.Release.Name }}-ops-configure-bits-service-s3
+    type: configmap
+{{- end }}
+{{- end }}
 {{- range $path, $bytes := .Files.Glob "assets/operations/instance_groups/*" }}
   - name: {{ include "kubecf.ops-name" (dict "ReleaseName" $root.Release.Name "Path" $path) }}
     type: configmap

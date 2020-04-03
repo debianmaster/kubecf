@@ -175,6 +175,7 @@
     release: eirini
 
 # Set the correct addresses to be reached by the Eirini apps namespace.
+{{- if eq .Values.features.blobstore.provider "singleton" }}
 - type: replace
   path: /instance_groups/name=api/jobs/name=cloud_controller_ng/properties/cc/buildpacks?/webdav_config/private_endpoint
   value: &blobstore_url "https://{{ .Release.Name }}-singleton-blobstore.{{ .Release.Namespace }}:4443"
@@ -193,6 +194,7 @@
 - type: replace
   path: /variables/name=blobstore_tls/options/alternative_names?/-
   value: "{{ .Release.Name }}-singleton-blobstore.{{ .Release.Namespace }}"
+{{- end }}
 - type: replace
   path: /instance_groups/name=api/jobs/name=cc_uploader/properties/internal_hostname?
   value: "{{ .Release.Name }}-api.{{ .Release.Namespace }}"
